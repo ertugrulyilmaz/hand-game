@@ -1,0 +1,62 @@
+plugins {
+  id 'java'
+  id 'jacoco'
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: "jacoco"
+
+group = 'ta'
+version = '1.0.0-SNAPSHOT'
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+  mavenCentral()
+}
+
+jar {
+  enabled = true
+}
+
+dependencies {
+  implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.8.1'
+  implementation group: 'com.google.guava', name: 'guava', version: '27.0.1-jre'
+
+
+  compileOnly 'org.projectlombok:lombok:1.18.4'
+  annotationProcessor 'org.projectlombok:lombok:1.18.4'
+
+  testImplementation 'org.junit.jupiter:junit-jupiter-api:5.3.1'
+  testCompile 'org.junit.jupiter:junit-jupiter-params:5.3.1'
+  testRuntime 'org.junit.jupiter:junit-jupiter-engine:5.3.1'
+  testCompile "org.mockito:mockito-core:2.23.0"
+  testCompile 'org.mockito:mockito-junit-jupiter:2.23.0'
+  testCompile 'org.mockito:mockito-inline:2.8.9'
+}
+
+jacocoTestReport {
+  reports {
+    xml.enabled false
+    csv.enabled false
+    html.destination file("${buildDir}/jacocoHtml")
+  }
+}
+
+jacocoTestCoverageVerification {
+  violationRules {
+    rule {
+      limit {
+        counter = 'INSTRUCTION'
+        value = 'COVEREDRATIO'
+        minimum = 0.0
+      }
+    }
+  }
+}
+
+test {
+  useJUnitPlatform()
+  finalizedBy jacocoTestCoverageVerification
+}
