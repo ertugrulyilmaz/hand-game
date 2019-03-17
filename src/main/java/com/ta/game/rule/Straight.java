@@ -4,6 +4,8 @@ import com.ta.game.entity.Card;
 
 import java.util.List;
 
+import static com.google.common.base.Preconditions.checkArgument;
+
 public final class Straight implements GameRule {
 
   @Override
@@ -29,6 +31,16 @@ public final class Straight implements GameRule {
     }
 
     return true;
+  }
+
+  @Override
+  public int compare(final List<Card> cards1, final List<Card> cards2) {
+    checkArgument(check(cards1) && check(cards2));
+
+    final int card1 = cards1.get(0).getIndex();
+    final int card2 = cards2.get(0).getIndex();
+
+    return Integer.compare(card1, card2);
   }
 
 }

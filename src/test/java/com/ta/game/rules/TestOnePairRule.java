@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -27,6 +28,26 @@ public class TestOnePairRule {
     assertTrue(onePair.check(cards3));
     assertTrue(onePair.check(cards4));
     assertFalse(onePair.check(cards5));
+  }
+
+  @Test
+  public void testComparisionOfTwoHand() {
+    final List<Card> cards1 = Lists.newArrayList(Card.of("2S"), Card.of("2H"), Card.of("3D"), Card.of("7H"), Card.of("AC"));
+    final List<Card> cards2 = Lists.newArrayList(Card.of("2S"), Card.of("5H"), Card.of("5D"), Card.of("8H"), Card.of("9C"));
+    final List<Card> cards3 = Lists.newArrayList(Card.of("3H"), Card.of("7S"), Card.of("9D"), Card.of("TH"), Card.of("TC"));
+
+    final List<Card> cards4 = Lists.newArrayList(Card.of("2H"), Card.of("4S"), Card.of("6D"), Card.of("6H"), Card.of("AC"));
+    final List<Card> cards5 = Lists.newArrayList(Card.of("2C"), Card.of("4H"), Card.of("6D"), Card.of("6C"), Card.of("AD"));
+
+    final List<Card> cards6 = Lists.newArrayList(Card.of("2H"), Card.of("4S"), Card.of("6D"), Card.of("6H"), Card.of("AC"));
+    final List<Card> cards7 = Lists.newArrayList(Card.of("2C"), Card.of("4H"), Card.of("6D"), Card.of("6C"), Card.of("TD"));
+
+    final OnePair onePair = new OnePair();
+
+    assertEquals(-1, onePair.compare(cards1, cards2));
+    assertEquals(1, onePair.compare(cards3, cards2));
+    assertEquals(0, onePair.compare(cards4, cards5));
+    assertEquals(1, onePair.compare(cards6, cards7));
   }
 
 }

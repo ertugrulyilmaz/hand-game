@@ -26,6 +26,16 @@ public class Application {
     System.out.println(twoPair);
     System.out.println(onePair);
     System.out.println(highCard);
+
+    System.out.println(royalFlush.toString() + " is higher than " + straightFlush + ", " + (royalFlush.getValue().ordinal() < straightFlush.getValue().ordinal()));
+    System.out.println(straightFlush.toString() + " is higher than " + fourOfAKind + ", " + (straightFlush.getValue().ordinal() < fourOfAKind.getValue().ordinal()));
+    System.out.println(fourOfAKind.toString() + " is higher than " + fullHouse + ", " + (fourOfAKind.getValue().ordinal() < fullHouse.getValue().ordinal()));
+    System.out.println(fullHouse.toString() + " is higher than " + flush + ", " + (fullHouse.getValue().ordinal() < flush.getValue().ordinal()));
+    System.out.println(flush.toString() + " is higher than " + straight + ", " + (flush.getValue().ordinal() < straight.getValue().ordinal()));
+    System.out.println(straight.toString() + " is higher than " + threeOfAKind + ", " + (straight.getValue().ordinal() < threeOfAKind.getValue().ordinal()));
+    System.out.println(threeOfAKind.toString() + " is higher than " + twoPair + ", " + (threeOfAKind.getValue().ordinal() < twoPair.getValue().ordinal()));
+    System.out.println(twoPair.toString() + " is higher than " + onePair + ", " + (twoPair.getValue().ordinal() < onePair.getValue().ordinal()));
+    System.out.println(onePair.toString() + " is higher than " + highCard + ", " + (onePair.getValue().ordinal() < highCard.getValue().ordinal()));
   }
 
 }

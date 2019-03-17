@@ -26,6 +26,10 @@ public enum CardValue {
     this.gameRule = gameRule;
   }
 
+  public GameRule getGameRule() {
+    return gameRule;
+  }
+
   public boolean check(final List<Card> cards) {
     return gameRule.check(cards);
   }
@@ -34,4 +38,5 @@ public enum CardValue {
   public String toString() {
     return label;
   }
+
 }

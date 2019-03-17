@@ -4,6 +4,8 @@ import com.ta.game.entity.Card;
 
 import java.util.List;
 
+import static com.google.common.base.Preconditions.checkArgument;
+
 public final class RoyalFlush implements GameRule {
 
   @Override
@@ -25,7 +27,10 @@ public final class RoyalFlush implements GameRule {
   }
 
   @Override
-  public String toString() {
-    return "Royal Flush";
+  public int compare(final List<Card> cards1, final List<Card> cards2) {
+    checkArgument(check(cards1) && check(cards2));
+
+    return 0;
   }
+
 }

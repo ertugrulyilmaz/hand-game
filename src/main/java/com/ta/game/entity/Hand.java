@@ -2,6 +2,7 @@ package com.ta.game.entity;
 
 import com.ta.game.entity.comperators.CardComperator;
 import com.ta.game.entity.enums.CardValue;
+import lombok.Getter;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -13,12 +14,15 @@ import static com.google.common.base.Strings.isNullOrEmpty;
 import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.toList;
 
+@Getter
 public class Hand implements Comparable<Hand> {
 
   private final List<Card> cards;
+  private final CardValue value;
 
   private Hand(final String[] cardArr) {
     this.cards = init(cardArr);
+    this.value = valueOf(this.cards);
   }
 
   private List<Card> init(final String[] cardArr) {
@@ -38,7 +42,7 @@ public class Hand implements Comparable<Hand> {
     return new Hand(cardArr);
   }
 
-  private CardValue value() {
+  private CardValue valueOf(final List<Card> cards) {
     if (CardValue.ROYAL_FLUSH.check(cards)) {
       return CardValue.ROYAL_FLUSH;
     } else if (CardValue.STRAIGHT_FLUSH.check(cards)) {
@@ -64,8 +68,9 @@ public class Hand implements Comparable<Hand> {
 
   @Override
   public String toString() {
-    final String hand = cards.stream().map(Card::toString).collect(Collectors.joining(" "));
-    final String value = value().toString();
+    final String hand = cards.stream()
+    .map(Card::toString)
+    .collect(Collectors.joining(" "));
 
     return new StringBuilder()
     .append("<hand ")
@@ -75,16 +80,20 @@ public class Hand implements Comparable<Hand> {
     .append(",")
     .append(" ")
     .append("'")
-    .append(value)
+    .append(value.toString())
     .append("'")
     .append(">")
     .toString();
   }
 
   @Override
-  public int compareTo(final Hand otherHand) {
-    if (otherHand.value().ordinal() > this.value().ordinal()) return 1;
-    else if (otherHand.value().ordinal() > this.value().ordinal()) return -1;
-    else return 0;
+  public int compareTo(final Hand o) {
+    if (value.ordinal() < o.getValue().ordinal()) {
+      return 1;
+    } else if (value.ordinal() > o.getValue().ordinal()) {
+      return -1;
+    } else {
+      return value.getGameRule().compare(cards, o.getCards());
+    }
   }
 }

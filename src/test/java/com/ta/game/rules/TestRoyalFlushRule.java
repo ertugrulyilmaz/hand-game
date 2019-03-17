@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -21,6 +22,7 @@ public class TestRoyalFlushRule {
     final List<Card> cards5 = Lists.newArrayList(Card.of("9S"), Card.of("JS"), Card.of("QS"), Card.of("KS"), Card.of("AS"));
     final List<Card> cards6 = Lists.newArrayList(Card.of("TS"), Card.of("JS"), Card.of("QS"), Card.of("KS"), Card.of("AC"));
     final List<Card> cards7 = Lists.newArrayList(Card.of("TS"), Card.of("JS"), Card.of("QS"), Card.of("KS"), Card.of("9S"));
+
     final RoyalFlush royalFlush = new RoyalFlush();
 
     assertTrue(royalFlush.check(cards1));
@@ -30,6 +32,22 @@ public class TestRoyalFlushRule {
     assertFalse(royalFlush.check(cards5));
     assertFalse(royalFlush.check(cards6));
     assertFalse(royalFlush.check(cards7));
+  }
+
+  @Test
+  public void testComparisionOfTwoHand() {
+    final List<Card> cards1 = Lists.newArrayList(Card.of("TS"), Card.of("JS"), Card.of("QS"), Card.of("KS"), Card.of("AS"));
+    final List<Card> cards2 = Lists.newArrayList(Card.of("TC"), Card.of("JC"), Card.of("QC"), Card.of("KC"), Card.of("AC"));
+    final List<Card> cards3 = Lists.newArrayList(Card.of("TH"), Card.of("JH"), Card.of("QH"), Card.of("KH"), Card.of("AH"));
+    final List<Card> cards4 = Lists.newArrayList(Card.of("TD"), Card.of("JD"), Card.of("QD"), Card.of("KD"), Card.of("AD"));
+
+    final RoyalFlush royalFlush = new RoyalFlush();
+
+    assertEquals(0, royalFlush.compare(cards1, cards2));
+    assertEquals(0, royalFlush.compare(cards1, cards3));
+    assertEquals(0, royalFlush.compare(cards1, cards4));
+    assertEquals(0, royalFlush.compare(cards2, cards3));
+    assertEquals(0, royalFlush.compare(cards3, cards4));
   }
 
 }
